@@ -7,6 +7,8 @@
     <!--고정 컬러값-->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="transparent_color">#00000000</color>
+
 
     <!--앱 스타일-->
     <color name="colorDefaultBackground">#ffffff</color>

@@ -33,9 +33,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이메일 또는 휴대전화 번호 입력"
+            android:inputType="text"
             android:maxLength="50"
+            android:singleLine="true"
             android:textColor="@color/colorDefaultButton"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_normal" />
 
         <EditText
             android:id="@+id/etPassword"
@@ -45,8 +48,10 @@
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:maxLength="20"
+            android:maxLines="1"
             android:textColor="@color/colorDefaultButton"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_normal" />
 
         <Button
             android:layout_width="match_parent"
@@ -64,6 +69,7 @@
             android:layout_marginTop="16dp">
 
             <TextView
+                android:id="@+id/tvSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원가입"
