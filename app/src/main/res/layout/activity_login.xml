@@ -86,6 +86,7 @@
                 android:textSize="@dimen/text_normal" />
 
             <TextView
+                android:id="@+id/tvFindIdPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아이디 &amp; 비밀번호 찾기"

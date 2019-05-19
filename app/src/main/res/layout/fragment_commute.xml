@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.CommuteFragment">
+
+    <LinearLayout
+        android:id="@+id/layoutWorkPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/shape_main_commute_border"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvWorkPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="(주)푸른밤 445"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_main_commute_period"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                android:text="최근"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="출퇴근 기록 없음"
+                android:textColor="#8EA2B8"
+                android:textSize="@dimen/text_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/common_horizontal_line"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvGoToWork"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/shape_main_commute_check"
+                android:gravity="center"
+                android:text="출근"
+                android:textColor="@drawable/shape_main_commute_check_text"
+                android:textSize="@dimen/text_biggest"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvLeaveWork"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/shape_main_commute_check"
+                android:gravity="center"
+                android:text="퇴근"
+                android:textColor="@drawable/shape_main_commute_check_text"
+                android:textSize="@dimen/text_biggest"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnFineWork"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_main_commute_button"
+        android:text="근무지 찾기"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_normal" />
+</LinearLayout>

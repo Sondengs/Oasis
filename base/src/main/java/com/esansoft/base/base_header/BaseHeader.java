@@ -93,7 +93,7 @@ public class BaseHeader extends LinearLayout {
         btnHeaderRight2.setVisibility(typedArray.getInt(R.styleable.BaseHeader_btn_right2_visibility, View.GONE));
 
         // 오른쪽 텍스트 버튼
-        btnHeaderText.setVisibility(typedArray.getInt(R.styleable.BaseHeader_btn_text_visivility, View.GONE));
+        btnHeaderText.setVisibility(typedArray.getInt(R.styleable.BaseHeader_btn_text_visibility, View.GONE));
 
         // 텍스트 버튼 text 설정
         String strText = typedArray.getString(R.styleable.BaseHeader_btn_text_text);
@@ -101,7 +101,7 @@ public class BaseHeader extends LinearLayout {
             btnHeaderText.setText(strText);
 
         // 왼쪽 텍스트 버튼
-        btnHeaderLeftText.setVisibility(typedArray.getInt(R.styleable.BaseHeader_btn_left_text_visivility, View.GONE));
+        btnHeaderLeftText.setVisibility(typedArray.getInt(R.styleable.BaseHeader_btn_left_text_visibility, View.GONE));
 
         // 왼쪽텍스트 버튼 text 설정
         String strLeftText = typedArray.getString(R.styleable.BaseHeader_btn_left_text_text);

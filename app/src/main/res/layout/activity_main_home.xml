@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F5F7"
+    android:orientation="vertical"
+    tools:context=".ui.main.Main">
+
+    <com.esansoft.base.base_header.BaseHeader
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:btn_left_visibility="gone" />
+
+    <com.esansoft.base.base_view_pager.BaseViewPager
+        android:id="@+id/viewPagerMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+    <LinearLayout
+        android:id="@+id/layoutTabMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/tvMainHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_main_home"
+            android:gravity="center"
+            android:text="홈"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tvMainWork"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_main_work"
+            android:gravity="center"
+            android:text="근무기록"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tvMainNoti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_main_noti"
+            android:gravity="center"
+            android:text="알림"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tvMainSetting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_main_setting"
+            android:gravity="center"
+            android:text="설정"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+</LinearLayout>
