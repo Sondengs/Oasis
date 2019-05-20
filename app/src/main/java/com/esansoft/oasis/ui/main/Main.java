@@ -1,5 +1,6 @@
 package com.esansoft.oasis.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.base.base_view_pager.BaseViewPager;
 import com.esansoft.base.base_view_pager.ViewPagerAdapter;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.ui.find_work_place.FindWorkPlace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Main extends BaseActivity {
     //=========================
     private BaseViewPager viewPager;
     private ViewPagerAdapter mViewPagerAdapter;
-    private List<Fragment> mListfragment = new ArrayList<>();
+    private List<Fragment> mListFragment = new ArrayList<>();
     private CommuteFragment fragmentHome;
     private WorkFragment fragmentWork;
     private NotiFragment fragmentNoti;
@@ -75,14 +77,14 @@ public class Main extends BaseActivity {
         fragmentNoti = new NotiFragment();
         fragmentSetting = new SettingFragment();
 
-        mListfragment.add(fragmentHome);
-        mListfragment.add(fragmentWork);
-        mListfragment.add(fragmentNoti);
-        mListfragment.add(fragmentSetting);
+        mListFragment.add(fragmentHome);
+        mListFragment.add(fragmentWork);
+        mListFragment.add(fragmentNoti);
+        mListFragment.add(fragmentSetting);
 
-        mViewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager(), mListfragment);
+        mViewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager(), mListFragment);
         viewPager.setAdapter(mViewPagerAdapter);
-        viewPager.setOffscreenPageLimit(mListfragment.size() - 1);
+        viewPager.setOffscreenPageLimit(mListFragment.size() - 1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -138,5 +140,20 @@ public class Main extends BaseActivity {
      */
     private void setCurrentViewPager(int page) {
         viewPager.setCurrentItem(page);
+    }
+
+    //================================
+    // Event
+    //================================
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case FindWorkPlace.REQUEST_CODE:
+                if(fragmentHome != null)
+                    fragmentHome.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 }

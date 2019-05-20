@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/shape_main_commute_border"
+        android:background="@drawable/shape_base_border"
         android:orientation="vertical">
 
         <TextView
