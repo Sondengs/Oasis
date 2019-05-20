@@ -1,35 +1,33 @@
-package com.esansoft.oasis.ui.find_work_place;
+package com.esansoft.oasis.ui.work_place_check;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.esansoft.base.base_activity.BaseActivity;
+import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.oasis.R;
 
-import java.util.ArrayList;
-
-public class FindWorkPlace extends BaseActivity {
+public class CheckWorkPlace extends BaseActivity {
     public static final int REQUEST_CODE = 1553;
 
     //===================================
     // Layout
     //===================================
-    private Spinner spinnerCity;
-    private Spinner spinnerStreet;
+    private BaseHeader header;
 
     //===================================
     // Variable
     //===================================
-    private ArrayAdapter arrayAdapter;
-    private ArrayList<String> listCity;
 
+
+    //===================================
+    // Initialize
+    //===================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_work_place);
+
+        setContentView(R.layout.activity_work_place_check);
 
         initLayout();
 
@@ -38,11 +36,14 @@ public class FindWorkPlace extends BaseActivity {
 
     @Override
     protected void initLayout() {
-        spinnerCity = findViewById(R.id.spinnerCity);
+        header = findViewById(R.id.header);
+        header.btnHeaderLeft.setOnClickListener(v -> finish());
+
 
     }
 
     @Override
     protected void initialize() {
+
     }
 }

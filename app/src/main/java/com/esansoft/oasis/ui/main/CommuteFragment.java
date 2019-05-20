@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.oasis.R;
-import com.esansoft.oasis.ui.find_work_place.FindWorkPlace;
+import com.esansoft.oasis.ui.work_place_search.FindWorkPlace;
 
 public class CommuteFragment extends BaseFragment {
     //========================

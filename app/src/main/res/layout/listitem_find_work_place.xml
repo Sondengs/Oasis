@@ -18,7 +18,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvWorkName"
+            android:id="@+id/tvWorkPlaceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -26,7 +26,7 @@
             tools:text="(주)푸른밤 445" />
 
         <TextView
-            android:id="@+id/tvWorkManager"
+            android:id="@+id/tvManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#8EA2B8"
@@ -34,7 +34,7 @@
             android:layout_marginTop="4dp"
             tools:text="점주명 : 김진용" />
         <TextView
-            android:id="@+id/tvWorkAddress"
+            android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#8EA2B8"
@@ -42,7 +42,7 @@
             android:layout_marginTop="4dp"
             tools:text="서울특별시 서초구 강남대로525, 15층" />
         <TextView
-            android:id="@+id/tvWorkPhone"
+            android:id="@+id/tvPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#8EA2B8"

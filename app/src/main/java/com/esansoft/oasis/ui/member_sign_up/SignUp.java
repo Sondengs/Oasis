@@ -1,4 +1,4 @@
-package com.esansoft.oasis.ui.sign_up;
+package com.esansoft.oasis.ui.member_sign_up;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

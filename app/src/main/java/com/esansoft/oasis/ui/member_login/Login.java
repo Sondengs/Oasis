@@ -1,18 +1,16 @@
-package com.esansoft.oasis.ui.login;
+package com.esansoft.oasis.ui.member_login;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esansoft.base.base_activity.BaseActivity;
 import com.esansoft.oasis.R;
-import com.esansoft.oasis.ui.scan.ScanBarcode;
-import com.esansoft.oasis.ui.sign_up.SignUp;
+import com.esansoft.oasis.ui.scanner.ScanBarcode;
+import com.esansoft.oasis.ui.member_sign_up.SignUp;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 

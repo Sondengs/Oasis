@@ -1,9 +1,7 @@
-package com.esansoft.oasis.ui.scan;
+package com.esansoft.oasis.ui.scanner;
 
 import android.os.Bundle;
 
-import com.esansoft.oasis.R;
-import com.google.zxing.integration.android.IntentIntegrator;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
 public class ScanBarcode extends CaptureActivity {

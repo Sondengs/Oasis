@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+
 import com.esansoft.base.R;
 import com.esansoft.base.util.BaseLoadingBar;
 

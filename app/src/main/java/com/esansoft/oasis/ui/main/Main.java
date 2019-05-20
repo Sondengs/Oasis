@@ -11,7 +11,7 @@ import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.base.base_view_pager.BaseViewPager;
 import com.esansoft.base.base_view_pager.ViewPagerAdapter;
 import com.esansoft.oasis.R;
-import com.esansoft.oasis.ui.find_work_place.FindWorkPlace;
+import com.esansoft.oasis.ui.work_place_search.FindWorkPlace;
 
 import java.util.ArrayList;
 import java.util.List;
