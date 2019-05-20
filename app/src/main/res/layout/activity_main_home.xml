@@ -12,6 +12,8 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:btn_right1_visibility="visible"
+        app:btn_right1_src="@drawable/main_scan"
         app:btn_left_visibility="gone" />
 
     <com.esansoft.base.base_view_pager.BaseViewPager

@@ -8,9 +8,9 @@
         android:name="com.esansoft.base.OasisApp"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -18,12 +18,17 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="dskuhyhdo7" />
 
-
-
         <activity
             android:name=".ui.member_login.Login"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentUser">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -39,13 +44,7 @@
         <activity
             android:name=".ui.main.Main"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentUser">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/TranslucentUser" />
         <activity
             android:name=".ui.work_place_search.FindWorkPlace"
             android:screenOrientation="portrait"
@@ -53,22 +52,12 @@
         <activity
             android:name=".ui.work_place_check.CheckWorkPlace"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentUser">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/TranslucentUser" />
         <activity
             android:name=".ui.member_sign_up.SignUp"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentUser" />
         <activity android:name=".ui.scanner.ScanBarcode" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

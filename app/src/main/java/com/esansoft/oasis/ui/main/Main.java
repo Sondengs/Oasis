@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.esansoft.base.base_activity.BaseActivity;
 import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.base.base_view_pager.BaseViewPager;
 import com.esansoft.base.base_view_pager.ViewPagerAdapter;
+import com.esansoft.base.util.BaseAlert;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.ui.scanner.ScanBarcode;
 import com.esansoft.oasis.ui.work_place_search.FindWorkPlace;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +56,12 @@ public class Main extends BaseActivity {
     @Override
     protected void initLayout() {
         header = findViewById(R.id.header);
+        header.btnHeaderRight1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goScan();
+            }
+        });
 
         tvMainHome = findViewById(R.id.tvMainHome);
         tvMainHome.setOnClickListener(v -> setCurrentViewPager(TAB_PAGE_HOME));
@@ -132,6 +143,16 @@ public class Main extends BaseActivity {
         }
     }
 
+    /**
+     * 바코드를 스캔한다.
+     */
+    private void goScan() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setCaptureActivity(ScanBarcode.class);
+        integrator.setOrientationLocked(false);
+        integrator.initiateScan();
+    }
+
 
     /**
      * ViewPager 이동시킨다.
@@ -151,9 +172,13 @@ public class Main extends BaseActivity {
 
         switch (requestCode) {
             case FindWorkPlace.REQUEST_CODE:
-                if(fragmentHome != null)
+                if (fragmentHome != null)
                     fragmentHome.onActivityResult(requestCode, resultCode, data);
                 break;
+            case IntentIntegrator.REQUEST_CODE:
+                // QR 코드/ 바코드를 스캔한 결과
+                IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                BaseAlert.show("Scan Type : " + result.getFormatName() + " / Data : " + result.getContents());
         }
     }
 }

@@ -2,13 +2,17 @@ package com.esansoft.oasis.ui.member_login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esansoft.base.base_activity.BaseActivity;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.ui.main.Main;
 import com.esansoft.oasis.ui.scanner.ScanBarcode;
 import com.esansoft.oasis.ui.member_sign_up.SignUp;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -20,7 +24,7 @@ public class Login extends BaseActivity {
     //========================================
     private TextView tvSignUp;
     private TextView tvFindIdPassword;
-
+    private Button btnLogin;
 
     //========================================
     // Initialize
@@ -45,6 +49,28 @@ public class Login extends BaseActivity {
 
         tvFindIdPassword = findViewById(R.id.tvFindIdPassword);
         tvFindIdPassword.setOnClickListener(v -> goScan());
+
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goMain();
+            }
+        });
+    }
+
+    /**
+     * 메인으로 이동한다.
+     */
+    private void goMain() {
+        openLoadingBar();
+        new Handler().postDelayed(() -> {
+            closeLoadingBar();
+            Intent intent = new Intent(mContext, Main.class);
+            mContext.startActivity(intent);
+            finish();
+        }, 2000);
+
     }
 
 
@@ -95,7 +121,7 @@ public class Login extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == IntentIntegrator.REQUEST_CODE) {
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
             // QR 코드/ 바코드를 스캔한 결과
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             // result.getFormatName() : 바코드 종류

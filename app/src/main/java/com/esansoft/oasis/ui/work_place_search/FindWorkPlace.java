@@ -98,6 +98,9 @@ public class FindWorkPlace extends BaseActivity {
     protected void initialize() {
         mList = new ArrayList<>();
 
+        mList.add(new WorkPlaceVO("(주)푸른밤 445", "김진용", "서울특별시 서초구 강남대로525, 15층", "164-433-32"));
+        mList.add(new WorkPlaceVO("푸른밤테스트", "조예라", "서울특별시 강남구 테헤란로39길 40", "025564660"));
+
         mAdapter = new FindWorkPlaceAdapter(mContext, mList);
         listView.setAdapter(mAdapter);
     }
@@ -109,10 +112,8 @@ public class FindWorkPlace extends BaseActivity {
     private void requestFindWorkPlace() {
         mList = new ArrayList<>();
 
-        if (BuildConfig.DEBUG) {
-            mList.add(new WorkPlaceVO("(주)푸른밤 445", "김진용", "서울특별시 서초구 강남대로525, 15층", "164-433-32"));
-            mList.add(new WorkPlaceVO("푸른밤테스트", "조예라", "서울특별시 강남구 테헤란로39길 40", "025564660"));
-        }
+        mList.add(new WorkPlaceVO("(주)푸른밤 445", "김진용", "서울특별시 서초구 강남대로525, 15층", "164-433-32"));
+        mList.add(new WorkPlaceVO("푸른밤테스트", "조예라", "서울특별시 강남구 테헤란로39길 40", "025564660"));
 
         mAdapter.updateData(mList);
         mAdapter.notifyDataSetChanged();
