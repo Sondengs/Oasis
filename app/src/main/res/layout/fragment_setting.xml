@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
-    tools:context=".ui.main.SettingFragment">
+    tools:context=".ui.settings_main.SettingFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,6 +59,7 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btnProfile"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/white"
@@ -100,6 +101,7 @@
                 android:visibility="invisible" />
 
             <Button
+                android:id="@+id/btnGoHomepage"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/white"
@@ -114,6 +116,7 @@
             <LinearLayout style="@style/common_horizontal_line" />
 
             <Button
+                android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/white"

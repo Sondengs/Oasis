@@ -1,8 +1,12 @@
 package com.esansoft.oasis.ui.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
@@ -12,7 +16,9 @@ import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.base.base_view_pager.BaseViewPager;
 import com.esansoft.base.base_view_pager.ViewPagerAdapter;
 import com.esansoft.base.util.BaseAlert;
+import com.esansoft.base_resource.broadcast_action.ClsBroadCast;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.ui.member_login.Login;
 import com.esansoft.oasis.ui.scanner.ScanBarcode;
 import com.esansoft.oasis.ui.work_place_search.FindWorkPlace;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -20,6 +26,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.esansoft.oasis.ui.settings_main.SettingFragment;
 
 public class Main extends BaseActivity {
     private final int TAB_PAGE_HOME = 0;
@@ -42,6 +50,15 @@ public class Main extends BaseActivity {
     private TextView tvMainNoti;
     private TextView tvMainSetting;
 
+    private BroadcastReceiver mBroadcastLogout = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ClsBroadCast.BROAD_CAST_ACTION_LOGOUT)) {
+                goLogin();
+                finish();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +73,7 @@ public class Main extends BaseActivity {
     @Override
     protected void initLayout() {
         header = findViewById(R.id.header);
-        header.btnHeaderRight1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goScan();
-            }
-        });
+        header.btnHeaderRight1.setOnClickListener(v -> goScan());
 
         tvMainHome = findViewById(R.id.tvMainHome);
         tvMainHome.setOnClickListener(v -> setCurrentViewPager(TAB_PAGE_HOME));
@@ -77,7 +89,17 @@ public class Main extends BaseActivity {
 
     @Override
     protected void initialize() {
+        registerReceiver();
         setTag();
+    }
+
+    private void registerReceiver() {
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastLogout,
+                new IntentFilter(ClsBroadCast.BROAD_CAST_ACTION_LOGOUT));
+    }
+
+    private void unregisterReceiver() {
+        LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mBroadcastLogout);
     }
 
     private void initViewPager() {
@@ -87,6 +109,11 @@ public class Main extends BaseActivity {
         fragmentWork = new WorkFragment();
         fragmentNoti = new NotiFragment();
         fragmentSetting = new SettingFragment();
+
+        fragmentHome.setOnLoadingDialog(callLoadingBar);
+        fragmentWork.setOnLoadingDialog(callLoadingBar);
+        fragmentNoti.setOnLoadingDialog(callLoadingBar);
+        fragmentSetting.setOnLoadingDialog(callLoadingBar);
 
         mListFragment.add(fragmentHome);
         mListFragment.add(fragmentWork);
@@ -127,20 +154,32 @@ public class Main extends BaseActivity {
             case TAB_PAGE_HOME:
                 tvMainHome.setSelected(true);
                 header.tvHeaderTitle.setText("출퇴근체크");
+                header.btnHeaderRight1.setVisibility(View.VISIBLE);
                 break;
             case TAB_PAGE_WORK:
                 tvMainWork.setSelected(true);
                 header.tvHeaderTitle.setText("근무기록");
+                header.btnHeaderRight1.setVisibility(View.GONE);
                 break;
             case TAB_PAGE_NOTI:
                 tvMainNoti.setSelected(true);
                 header.tvHeaderTitle.setText("알림");
+                header.btnHeaderRight1.setVisibility(View.GONE);
                 break;
             case TAB_PAGE_SETTING:
                 tvMainSetting.setSelected(true);
                 header.tvHeaderTitle.setText("설정");
+                header.btnHeaderRight1.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    /**
+     * 로그인으로 이동한다.
+     */
+    private void goLogin() {
+        Intent intent = new Intent(mContext, Login.class);
+        mContext.startActivity(intent);
     }
 
     /**
@@ -152,7 +191,6 @@ public class Main extends BaseActivity {
         integrator.setOrientationLocked(false);
         integrator.initiateScan();
     }
-
 
     /**
      * ViewPager 이동시킨다.
@@ -178,7 +216,15 @@ public class Main extends BaseActivity {
             case IntentIntegrator.REQUEST_CODE:
                 // QR 코드/ 바코드를 스캔한 결과
                 IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-                BaseAlert.show("Scan Type : " + result.getFormatName() + " / Data : " + result.getContents());
+
+                if (result.getFormatName() != null)
+                    BaseAlert.show("Scan Type : " + result.getFormatName() + " / Data : " + result.getContents());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver();
     }
 }

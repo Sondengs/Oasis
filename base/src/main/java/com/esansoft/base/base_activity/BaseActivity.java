@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 
 
 import com.esansoft.base.R;
+import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.base.util.BaseLoadingBar;
 
 public abstract class BaseActivity extends FragmentActivity {
@@ -53,4 +54,16 @@ public abstract class BaseActivity extends FragmentActivity {
             mLoadingBar.dismiss();
         }
     }
+
+    protected BaseFragment.CallLoadingBar callLoadingBar = new BaseFragment.CallLoadingBar() {
+        @Override
+        public void callOpenLoadingBar() {
+            openLoadingBar();
+        }
+
+        @Override
+        public void callCloseLoadingBar() {
+            closeLoadingBar();
+        }
+    };
 }

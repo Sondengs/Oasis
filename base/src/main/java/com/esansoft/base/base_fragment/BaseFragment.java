@@ -36,22 +36,26 @@ public class BaseFragment extends Fragment {
     //=========================
     // 로딩바 구현
     //=========================
-    public interface CallLoadingDialog {
-        void openLoadingDialog();
+    public interface CallLoadingBar {
+        void callOpenLoadingBar();
 
-        void closeLoadingDialog();
+        void callCloseLoadingBar();
     }
 
     // Loading Callback
-    protected CallLoadingDialog callLoadingDialog;
+    protected CallLoadingBar callLoadingBar;
 
-    protected void loadingDialogOpen() {
-        if (callLoadingDialog != null)
-            callLoadingDialog.openLoadingDialog();
+    public void setOnLoadingDialog(CallLoadingBar callLoadingBar) {
+        this.callLoadingBar = callLoadingBar;
     }
 
-    protected void loadingDialogClose() {
-        if (callLoadingDialog != null)
-            callLoadingDialog.closeLoadingDialog();
+    protected void openLoadingBar() {
+        if (callLoadingBar != null)
+            callLoadingBar.callOpenLoadingBar();
+    }
+
+    protected void closeLoadingBar() {
+        if (callLoadingBar != null)
+            callLoadingBar.callCloseLoadingBar();
     }
 }
