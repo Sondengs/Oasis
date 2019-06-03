@@ -39,17 +39,15 @@ public class CommuteFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_commute, container, false);
 
-        initLayout(view);
+        initLayout();
 
         return view;
     }
 
     /**
      * 레이아웃 초기화
-     *
-     * @param view
      */
-    private void initLayout(View view) {
+    private void initLayout() {
         tvGoToWork = view.findViewById(R.id.tvGoToWork);
         tvGoToWork.setSelected(true);
         tvGoToWork.setOnClickListener(v -> setCommute(v));

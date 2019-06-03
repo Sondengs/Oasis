@@ -27,6 +27,11 @@
             android:name=".ui.intro.Intro"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -44,13 +49,7 @@
         <activity
             android:name=".ui.settings_profile.ProfileMain"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentUser">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/TranslucentUser"/>
 
         <activity
             android:name=".ui.permission_info.PermissionInfo"
@@ -77,7 +76,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentUser" />
         <activity android:name=".ui.scanner.ScanBarcode" />
-
 
 
         <provider

@@ -12,10 +12,12 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.esansoft.base.base_activity.BaseActivity;
+import com.esansoft.base.base_header.BaseHeader;
 import com.esansoft.base.util.ClsDateTime;
 import com.esansoft.base.util.ClsImage;
 import com.esansoft.oasis.R;
@@ -46,6 +48,7 @@ public class ProfileMain extends BaseActivity {
     //======================
     // Layout
     //======================
+    private BaseHeader header;
     private ImageView imgProfilePhoto;
     private Button btnChangePhoto;
 
@@ -74,6 +77,8 @@ public class ProfileMain extends BaseActivity {
 
     @Override
     protected void initLayout() {
+        header = findViewById(R.id.header);
+        header.btnHeaderLeft.setOnClickListener(v -> finish());
         imgProfilePhoto = findViewById(R.id.imgProfilePhoto);
         if (Build.VERSION.SDK_INT >= 21) {
             imgProfilePhoto.setClipToOutline(true);
