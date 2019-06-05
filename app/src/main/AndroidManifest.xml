@@ -78,6 +78,26 @@
         <activity android:name=".ui.scanner.ScanBarcode" />
 
 
+        <!--==================================-->
+        <!--Service-->
+        <!--==================================-->
+        <service
+            android:name=".base.fcm.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".base.fcm.MyJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
+        <!--==================================-->
+        <!--Provider-->
+        <!--==================================-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -88,9 +108,18 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!--==================================-->
+        <!--meta-->
+        <!--==================================-->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="dskuhyhdo7" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.esansoft.base.base_activity.BaseActivity;
+import com.esansoft.base.util.ClsNotificationChannel;
 import com.esansoft.base.util.ClsPermission;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.ui.member_login.Login;
@@ -31,6 +32,8 @@ public class Intro extends BaseActivity {
 
     @Override
     protected void initialize() {
+        ClsNotificationChannel.createNotificationChannel(mContext);
+
         new Handler().postDelayed(() -> {
             if (!ClsPermission.checkPermissionAll(mContext))
                 goPermissionInfo();
