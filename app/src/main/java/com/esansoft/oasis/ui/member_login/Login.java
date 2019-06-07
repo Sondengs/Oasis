@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class Login extends BaseActivity {
     //========================================
     // Layout
     //========================================
+    private EditText etAccount;
     private TextView tvSignUp;
     private TextView tvFindIdPassword;
     private Button btnLogin;
@@ -39,11 +41,12 @@ public class Login extends BaseActivity {
 
     @Override
     protected void initialize() {
-
+        etAccount.setText(mSettings.Value.LoginID);
     }
 
     @Override
     protected void initLayout() {
+        etAccount = findViewById(R.id.etAccount);
         tvSignUp = findViewById(R.id.tvSignUp);
         tvSignUp.setOnClickListener(v -> goSignUp());
 

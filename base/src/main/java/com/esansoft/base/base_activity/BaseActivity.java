@@ -8,12 +8,14 @@ import android.support.v4.app.FragmentActivity;
 
 import com.esansoft.base.R;
 import com.esansoft.base.base_fragment.BaseFragment;
+import com.esansoft.base.settings.InterfaceSettings;
 import com.esansoft.base.util.BaseLoadingBar;
 
 public abstract class BaseActivity extends FragmentActivity {
     public static Context BaseContext;
     protected Context mContext;
     protected Activity mActivity;
+    protected InterfaceSettings mSettings;
 
     private BaseLoadingBar mLoadingBar;
 
@@ -24,6 +26,7 @@ public abstract class BaseActivity extends FragmentActivity {
         BaseContext = this;
         mContext = this;
         mActivity = this;
+        mSettings = InterfaceSettings.getInstance(this);
     }
 
     @Override
