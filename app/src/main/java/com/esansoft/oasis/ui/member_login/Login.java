@@ -1,8 +1,11 @@
 package com.esansoft.oasis.ui.member_login;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -12,12 +15,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esansoft.base.base_activity.BaseActivity;
+import com.esansoft.base.network.ClsNetworkCheck;
+import com.esansoft.base.util.BaseAlert;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.model.BaseModel;
+import com.esansoft.oasis.model.SampleModel;
+import com.esansoft.oasis.network.BaseConst;
+import com.esansoft.oasis.network.Http;
+import com.esansoft.oasis.network.HttpBaseService;
 import com.esansoft.oasis.ui.main.Main;
-import com.esansoft.oasis.ui.scanner.ScanBarcode;
 import com.esansoft.oasis.ui.member_sign_up.SignUp;
+import com.esansoft.oasis.ui.scanner.ScanBarcode;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Login extends BaseActivity {
     //========================================
@@ -57,7 +71,74 @@ public class Login extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goMain();
+                requestEMPVIEW();
+            }
+        });
+    }
+
+    /**
+     * 로그인
+     */
+    private void requestEMPVIEW() {
+        if (!ClsNetworkCheck.isConnectable(mContext)) {
+            BaseAlert.show("Check internet connection\nthen try again.");
+            return;
+        }
+
+        openLoadingBar();
+
+        Call<SampleModel> call = Http.member(HttpBaseService.TYPE.POST).login(
+                BaseConst.URL_HOST,
+                "LOGIN",
+                "2",
+                "1234",
+                "test@esansoft.co.kr"
+        );
+
+        call.enqueue(new Callback<SampleModel>() {
+            @SuppressLint("HandlerLeak")
+            @Override
+            public void onResponse(Call<SampleModel> call, Response<SampleModel> response) {
+                Message msg = new Message();
+                msg.obj = response;
+                msg.what = 100;
+
+                //=====================
+                // response callback
+                //=====================
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if (msg.what == 100) {
+                            closeLoadingBar();
+                            Response<SampleModel> response = (Response<SampleModel>) msg.obj;
+//                            boolean success = response.body().IsSuccess;
+//                            String message = response.body().ErrorMsg;
+
+                            BaseAlert.show("CDO_01 :" + response.body().Data.get(0).CDO_01 + "\n" +
+                                    "CDO_02 :" + response.body().Data.get(0).CDO_02 + "\n" +
+                                    "CDO_04 :" + response.body().Data.get(0).CDO_04 + "\n" +
+                                    "CDO_12 :" + response.body().Data.get(0).CDO_12 + "\n" +
+                                    "CDO_17 :" + response.body().Data.get(0).CDO_17 + "\n" +
+                                    "CDO_18 :" + response.body().Data.get(0).CDO_18 + "\n" +
+                                    "CDO_19 :" + response.body().Data.get(0).CDO_19 + "\n" +
+                                    "CDO_20 :" + response.body().Data.get(0).CDO_20 + "\n" +
+                                    "CDO_23 :" + response.body().Data.get(0).CDO_23, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    goMain();
+                                }
+                            });
+                        }
+                    }
+                }.sendMessage(msg);
+
+            }
+
+            @Override
+            public void onFailure(Call<SampleModel> call, Throwable t) {
+                Log.d("Test", t.getMessage());
+                closeLoadingBar();
             }
         });
     }
@@ -66,14 +147,9 @@ public class Login extends BaseActivity {
      * 메인으로 이동한다.
      */
     private void goMain() {
-        openLoadingBar();
-        new Handler().postDelayed(() -> {
-            closeLoadingBar();
-            Intent intent = new Intent(mContext, Main.class);
-            mContext.startActivity(intent);
-            finish();
-        }, 2000);
-
+        Intent intent = new Intent(mContext, Main.class);
+        mContext.startActivity(intent);
+        finish();
     }
 
 
