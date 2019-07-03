@@ -80,13 +80,17 @@ public class Login extends BaseActivity {
      * 로그인
      */
     private void requestEMPVIEW() {
+        // 인터넷 연결 여부 확인
         if (!ClsNetworkCheck.isConnectable(mContext)) {
             BaseAlert.show("Check internet connection\nthen try again.");
             return;
         }
 
+        // API 호출 시 로딩바
         openLoadingBar();
 
+        // API URL및 Param 설정
+        // 여기서 <SampleModel> 은 받을 데이터의 형태(Json format)
         Call<SampleModel> call = Http.member(HttpBaseService.TYPE.POST).login(
                 BaseConst.URL_HOST,
                 "LOGIN",
@@ -95,6 +99,7 @@ public class Login extends BaseActivity {
                 "test@esansoft.co.kr"
         );
 
+        // Api 호출 후 response 받을 위치
         call.enqueue(new Callback<SampleModel>() {
             @SuppressLint("HandlerLeak")
             @Override
@@ -110,9 +115,15 @@ public class Login extends BaseActivity {
                     @Override
                     public void handleMessage(Message msg) {
                         if (msg.what == 100) {
+                            // 로딩바 닫음
                             closeLoadingBar();
+
+                            // SampleModel 형태로 response를 받음
                             Response<SampleModel> response = (Response<SampleModel>) msg.obj;
+
+                            // 원래 IsSuccess값을 보고 API 호출이 정상적으로 이뤄졌는지 판단
 //                            boolean success = response.body().IsSuccess;
+                            // API 호출이 제대로 안된 경우 ErrorMsg를 보고 판단
 //                            String message = response.body().ErrorMsg;
 
                             BaseAlert.show("CDO_01 :" + response.body().Data.get(0).CDO_01 + "\n" +
