@@ -12,8 +12,8 @@ import android.widget.Spinner;
 
 import com.esansoft.base.base_activity.BaseActivity;
 import com.esansoft.base.base_header.BaseHeader;
-import com.esansoft.oasis.BuildConfig;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.value_object.WorkPlaceVO;
 
 import java.util.ArrayList;
 

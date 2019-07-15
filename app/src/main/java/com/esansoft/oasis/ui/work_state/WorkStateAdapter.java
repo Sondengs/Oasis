@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.value_object.WorkStateVO;
 
 import java.util.ArrayList;
 
@@ -63,24 +64,16 @@ public class WorkStateAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(mContext).load(mList.get(position).UserPhoto)
-                .placeholder(R.drawable.main_profile_no_image)
-                .error(R.drawable.main_profile_no_image)
-                .into(viewHolder.imgUserPhoto);
+        // 사용자 이미지 가져올때
+//        Glide.with(mContext).load(mList.get(position).UserPhoto) // Url주소
+//                .placeholder(R.drawable.main_profile_no_image)
+//                .error(R.drawable.main_profile_no_image)
+//                .into(viewHolder.imgUserPhoto);
 
-        viewHolder.tvUserName.setText(mList.get(position).WorkerName);
-
-        String strWorkType = "시급직";
-        if (mList.get(position).WorkType.equals("FULL_TYPE"))
-            strWorkType = "월급직";
-
-        viewHolder.tvWorkType.setText(strWorkType);
-        viewHolder.tvWorkTime.setText(mList.get(position).WorkTime);
-
-        String strWorkState = "연차";
-        if (mList.get(position).WorkState.equals("WORKING"))
-            strWorkState = "근무중";
-        viewHolder.tvWorkState.setText(strWorkState);
+        viewHolder.tvUserName.setText(mList.get(position).LED_04_NM);
+        viewHolder.tvWorkType.setText(mList.get(position).LED_01);
+        viewHolder.tvWorkTime.setText(mList.get(position).WORKTIME);
+        viewHolder.tvWorkState.setText(mList.get(position).STAT);
 
         return convertView;
     }

@@ -1,5 +1,7 @@
 package com.esansoft.oasis.model;
 
+import com.esansoft.oasis.value_object.EmployeeVO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -39,6 +39,11 @@ public class ClsDateTime {
 		return sdfParseDefault.format(cal.getTime());
 	}
 
+	public static String getNow(String format) {
+		Calendar cal = Calendar.getInstance();
+		return new SimpleDateFormat(format).format(cal.getTime());
+	}
+
 	/**
 	 * 현재 날짜에 시분초를 설정한다.
 	 *

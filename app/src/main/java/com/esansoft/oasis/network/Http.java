@@ -1,5 +1,6 @@
 package com.esansoft.oasis.network;
 
+import com.esansoft.oasis.model.ATD_LIST_Model;
 import com.esansoft.oasis.model.LoginModel;
 
 import retrofit2.Call;
@@ -41,7 +42,21 @@ public class Http extends HttpBaseService {
                 @Field(value = "CDO_20") String CDO_20
         );
 
-
+        /**
+         * 가입
+         * @param host
+         * @param GUBUN
+         * @param CDO_ID
+         * @param CDO_02
+         * @param CDO_04
+         * @param CDO_12
+         * @param CDO_17
+         * @param CDO_18
+         * @param CDO_19
+         * @param CDO_20
+         * @param CDO_23
+         * @return
+         */
         @FormUrlEncoded
         @POST(BaseConst.URL_EMPINPUT)
         Call<LoginModel> signUp(
@@ -62,11 +77,20 @@ public class Http extends HttpBaseService {
     //--------------------------------------------------
     // 회원 - 나만의 목표
     //--------------------------------------------------
-    public static IATD myGoal(TYPE type) {
+    public static IATD work(TYPE type) {
         return (IATD) retrofit(IATD.class, type);
     }
 
     public interface IATD {
 
+        @FormUrlEncoded
+        @POST(BaseConst.URL_ATDVIEW)
+        Call<ATD_LIST_Model> getWorkStateData(
+                @Path(value = "host", encoded = true) String host,
+                @Field(value = "GUBUN") String GUBUN,
+                @Field(value = "LED_ID") String CDO_ID,
+                @Field(value = "LED_03") String CDO_12,
+                @Field(value = "LED_04") String CDO_20
+        );
     }
 }

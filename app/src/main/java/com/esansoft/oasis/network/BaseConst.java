@@ -17,4 +17,9 @@ public class BaseConst {
      * 가입
      */
     public static final String URL_EMPINPUT = "{host}/Mobile/EMPINPUT";
+
+    /**
+     * 근무 조회
+     */
+    public static final String URL_ATDVIEW = "{host}/Mobile/ATDVIEW";
 }

@@ -1,17 +1,34 @@
 package com.esansoft.oasis.ui.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.esansoft.base.base_fragment.BaseFragment;
+import com.esansoft.base.network.ClsNetworkCheck;
+import com.esansoft.base.util.BaseAlert;
+import com.esansoft.base.util.ClsDateTime;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.model.ATD_LIST_Model;
+import com.esansoft.oasis.model.LoginModel;
+import com.esansoft.oasis.network.BaseConst;
+import com.esansoft.oasis.network.Http;
+import com.esansoft.oasis.network.HttpBaseService;
 import com.esansoft.oasis.ui.work_state.WorkStateAdapter;
-import com.esansoft.oasis.ui.work_state.WorkStateVO;
+import com.esansoft.oasis.value_object.WorkStateVO;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WorkFragment extends BaseFragment {
     //===================================
@@ -19,7 +36,7 @@ public class WorkFragment extends BaseFragment {
     //===================================
     private View view;
     private ListView listView;
-
+    private SwipeRefreshLayout swipeRefresh;
 
     //===================================
     // Variable
@@ -45,40 +62,94 @@ public class WorkFragment extends BaseFragment {
 
         initialize();
 
+        requestATDVIEW();
+
         return view;
     }
 
     private void initLayout() {
         listView = view.findViewById(R.id.listView);
+
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestATDVIEW();
+            }
+        });
     }
 
 
     protected void initialize() {
         mList = new ArrayList<>();
 
-        mList.add(new WorkStateVO("https://techcrunch.com/wp-content/uploads/2018/07/logo-2.png", "조예라", "FULL_TYPE", "10:18", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/mcdonalds.png", "김지호", "FULL_TYPE", "10:15", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/pepsi.png", "김윤규", "PART_TYPE", "09:48", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/yc.png", "진성훈", "FULL_TYPE", "11:11", "WORKING"));
-        mList.add(new WorkStateVO("", "전형근", "PART_TYPE", "10:25", "WORKING"));
-        mList.add(new WorkStateVO("", "한순모", "FULL_TYPE", "09:44", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/snap.png", "최보람", "FULL_TYPE", "09:39", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/snap.png", "김철영", "PART_TYPE", "10:00", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/snap.png", "이상근", "PART_TYPE", "10:18", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/snap.png", "박지훈", "FULL_TYPE", "10:00", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/apple.png", "조예라", "FULL_TYPE", "10:18", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/apple.png", "김지호", "FULL_TYPE", "10:15", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/apple.png", "김윤규", "PART_TYPE", "09:48", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/random/apple.png", "진성훈", "FULL_TYPE", "11:11", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/wool.png", "전형근", "PART_TYPE", "10:25", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/wool.png", "한순모", "FULL_TYPE", "09:44", "WORKING"));
-        mList.add(new WorkStateVO("https://brandmark.io/logo-rank/wool.png", "최보람", "FULL_TYPE", "09:39", "WORKING"));
-        mList.add(new WorkStateVO("", "김철영", "PART_TYPE", "10:00", "WORKING"));
-        mList.add(new WorkStateVO("", "이상근", "PART_TYPE", "10:18", "WORKING"));
-        mList.add(new WorkStateVO("", "박지훈", "FULL_TYPE", "10:00", "WORKING"));
-
 
         mAdapter = new WorkStateAdapter(mContext, mList);
         listView.setAdapter(mAdapter);
+    }
+
+    private void requestATDVIEW() {
+        // 인터넷 연결 여부 확인
+        if (!ClsNetworkCheck.isConnectable(mContext)) {
+            BaseAlert.show("Check internet connection\nthen try again.");
+            return;
+        }
+
+        // API 호출 시 로딩바
+        openLoadingBar();
+
+        String strToday = ClsDateTime.getNow("yyyyMMdd");
+
+        // API URL및 Param 설정
+        // 여기서 <SampleModel> 은 받을 데이터의 형태(Json format)
+        Call<ATD_LIST_Model> call = Http.work(HttpBaseService.TYPE.POST).getWorkStateData(
+                BaseConst.URL_HOST,
+                "LIST",
+                "2",
+                "20190611",
+                ""
+        );
+
+        // Api 호출 후 response 받을 위치
+        call.enqueue(new Callback<ATD_LIST_Model>() {
+            @SuppressLint("HandlerLeak")
+            @Override
+            public void onResponse(Call<ATD_LIST_Model> call, Response<ATD_LIST_Model> response) {
+                Message msg = new Message();
+                msg.obj = response;
+                msg.what = 100;
+
+                //=====================
+                // response callback
+                //=====================
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if (msg.what == 100) {
+                            // 로딩바 닫음
+                            closeLoadingBar();
+
+                            // SampleModel 형태로 response를 받음
+                            Response<ATD_LIST_Model> response = (Response<ATD_LIST_Model>) msg.obj;
+
+                            mList = response.body().Data;
+                            if (mList == null)
+                                mList = new ArrayList<>();
+
+                            mAdapter.updateData(mList);
+                            mAdapter.notifyDataSetChanged();
+                            swipeRefresh.setRefreshing(false);
+                        }
+                    }
+                }.sendMessage(msg);
+
+            }
+
+            @Override
+            public void onFailure(Call<ATD_LIST_Model> call, Throwable t) {
+                Log.d("Test", t.getMessage());
+                closeLoadingBar();
+            }
+        });
     }
 }

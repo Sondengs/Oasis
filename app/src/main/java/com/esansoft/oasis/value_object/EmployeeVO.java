@@ -1,4 +1,4 @@
-package com.esansoft.oasis.model;
+package com.esansoft.oasis.value_object;
 
 public class EmployeeVO {
     public String CDO_ID;

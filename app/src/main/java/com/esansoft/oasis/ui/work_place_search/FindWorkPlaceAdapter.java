@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.value_object.WorkPlaceVO;
 
 import java.util.ArrayList;
 

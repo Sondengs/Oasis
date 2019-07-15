@@ -1,4 +1,4 @@
-package com.esansoft.oasis.ui.work_place_search;
+package com.esansoft.oasis.value_object;
 
 public class WorkPlaceVO {
     public String WorkPlaceName;
