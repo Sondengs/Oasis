@@ -12,4 +12,9 @@ public class BaseConst {
     // 회원
     //--------------------------------------------------
     public static final String URL_EMPVIEW = "{host}/Mobile/EMPVIEW";
+
+    /**
+     * 가입
+     */
+    public static final String URL_EMPINPUT = "{host}/Mobile/EMPINPUT";
 }

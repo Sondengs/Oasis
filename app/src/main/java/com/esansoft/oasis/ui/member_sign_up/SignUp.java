@@ -2,12 +2,16 @@ package com.esansoft.oasis.ui.member_sign_up;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,11 +21,20 @@ import android.widget.ImageView;
 
 import com.esansoft.base.base_activity.BaseActivity;
 import com.esansoft.base.base_header.BaseHeader;
+import com.esansoft.base.network.ClsNetworkCheck;
 import com.esansoft.base.util.BaseAlert;
 import com.esansoft.oasis.R;
+import com.esansoft.oasis.model.LoginModel;
+import com.esansoft.oasis.network.BaseConst;
+import com.esansoft.oasis.network.Http;
+import com.esansoft.oasis.network.HttpBaseService;
 import com.esansoft.oasis.ui.main.Main;
 
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUp extends BaseActivity {
     //========================================
@@ -29,11 +42,11 @@ public class SignUp extends BaseActivity {
     //========================================
     private BaseHeader header;
 
-    private EditText etLastName;
-    private EditText etFirstName;
+    private EditText etName;
     private EditText etMobile;
+    private EditText etEmail;
     private EditText etPassword;
-    private EditText etBusinessID;
+    private EditText etPasswordConfirm;
 
     private ImageView imgShowPassword;
 
@@ -60,12 +73,17 @@ public class SignUp extends BaseActivity {
         });
 
 
-        etLastName = findViewById(R.id.etLastName);
-        etFirstName = findViewById(R.id.etFirstName);
+        etName = findViewById(R.id.etName);
         etMobile = findViewById(R.id.etMobile);
         etMobile.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        etEmail = findViewById(R.id.etEmail);
+        etEmail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        InputFilter[] filter = new InputFilter[1];
+        filter[0] = new InputFilter.LengthFilter(50);
+        etEmail.setFilters(filter);
+
         etPassword = findViewById(R.id.etPassword);
-        etBusinessID = findViewById(R.id.etBusinessID);
+        etPasswordConfirm = findViewById(R.id.etPasswordConfirm);
 
         imgShowPassword = findViewById(R.id.imgShowPassword);
         imgShowPassword.setOnTouchListener((v, event) -> {
@@ -105,12 +123,17 @@ public class SignUp extends BaseActivity {
      * 휴대폰 유효성 체크
      */
     private void validate() {
-        // 성 체크
-        if (!isEmptyItem(etLastName, "성을 입력하세요."))
+        // 이메일 주소 체크
+        if (!isEmptyItem(etEmail, "이메일 주소를 입력하세요."))
             return;
 
+        if (!validateEmail()) {
+            BaseAlert.show("이메일 주소를 확인하세요.");
+            return;
+        }
+
         // 이름 체크
-        if (!isEmptyItem(etFirstName, "이름을 입력하세요."))
+        if (!isEmptyItem(etName, "이름을 입력하세요."))
             return;
 
         // 휴대폰 번호 체크
@@ -125,7 +148,6 @@ public class SignUp extends BaseActivity {
             return;
         }
 
-
         // 비밀 번호 체크
         if (!isEmptyItem(etPassword, "비밀 번호를 입력하세요."))
             return;
@@ -138,7 +160,30 @@ public class SignUp extends BaseActivity {
             return;
         }
 
+        // 비밀 번호 확인
+        if (!isEmptyItem(etPassword, "비밀 번호 확인을 입력하세요."))
+            return;
+
+        if (!etPassword.getText().toString().equals(etPasswordConfirm.getText().toString())) {
+            etPasswordConfirm.requestFocus();
+            BaseAlert.show("입력된 비밀번호가 다릅니다. 비밀번호를 확인해주세요.");
+            return;
+        }
+
         requestSignUp();
+    }
+
+    /**
+     * 이메일 체크
+     *
+     * @return
+     */
+    private boolean validateEmail() {
+        String email = etEmail.getText().toString();
+
+        boolean isValid = Pattern.matches("[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+", email.trim());
+
+        return isValid;
     }
 
     /**
@@ -172,17 +217,74 @@ public class SignUp extends BaseActivity {
      * 회원가입 요청
      */
     private void requestSignUp() {
+        // 인터넷 연결 여부 확인
+        if (!ClsNetworkCheck.isConnectable(mContext)) {
+            BaseAlert.show("Check internet connection\nthen try again.");
+            return;
+        }
+
+        String strEmail = etEmail.getText().toString().trim();
+        String strName = etName.getText().toString().trim();
+        String strPhone = etMobile.getText().toString().trim();
+        String strPassword = etPassword.getText().toString().trim();
 
         openLoadingBar();
 
-        new Handler().postDelayed(() -> {
-            closeLoadingBar();
+        Call<LoginModel> call = Http.member(HttpBaseService.TYPE.POST).signUp(
+                BaseConst.URL_HOST,
+                "INSERT",
+                "2",
+                "",
+                strName, // 이름
+                strPassword, // 비밀번호
+                "",
+                "",
+                "",
+                strEmail, // 이메일
+                strPhone  // 휴대전화번호
+        );
 
-            BaseAlert.show("가입되었습니다.", (dialog, which) -> {
-                goMain();
-            });
-        }, 2000);
+        // Api 호출 후 response 받을 위치
+        call.enqueue(new Callback<LoginModel>() {
+            @SuppressLint("HandlerLeak")
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                Message msg = new Message();
+                msg.obj = response;
+                msg.what = 100;
 
+                //=====================
+                // response callback
+                //=====================
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if (msg.what == 100) {
+                            // 로딩바 닫음
+                            closeLoadingBar();
+
+                            // SampleModel 형태로 response를 받음
+                            Response<LoginModel> response = (Response<LoginModel>) msg.obj;
+
+                            if (response.body().Data.get(0).Validation) {
+                                // UserInterface 연결
+                                BaseAlert.show("가입을 완료하였습니다.", (dialog, which) -> goMain());
+                            } else {
+                                // ErrorMsg
+                                BaseAlert.show("가입에 실패했습니다.");
+                            }
+                        }
+                    }
+                }.sendMessage(msg);
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+                Log.d("Test", t.getMessage());
+                closeLoadingBar();
+            }
+        });
     }
 
     /**
@@ -252,21 +354,21 @@ public class SignUp extends BaseActivity {
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            if (etLastName.isFocused()) {
-                mgr.hideSoftInputFromWindow(etLastName.getWindowToken(), 0);
-                etLastName.clearFocus();
-            } else if (etFirstName.isFocused()) {
-                mgr.hideSoftInputFromWindow(etFirstName.getWindowToken(), 0);
-                etFirstName.clearFocus();
+            if (etEmail.isFocused()) {
+                mgr.hideSoftInputFromWindow(etEmail.getWindowToken(), 0);
+                etEmail.clearFocus();
+            } else if (etName.isFocused()) {
+                mgr.hideSoftInputFromWindow(etName.getWindowToken(), 0);
+                etName.clearFocus();
             } else if (etMobile.isFocused()) {
                 mgr.hideSoftInputFromWindow(etMobile.getWindowToken(), 0);
                 etMobile.clearFocus();
             } else if (etPassword.isFocused()) {
                 mgr.hideSoftInputFromWindow(etPassword.getWindowToken(), 0);
                 etPassword.clearFocus();
-            } else if (etBusinessID.isFocused()) {
-                mgr.hideSoftInputFromWindow(etBusinessID.getWindowToken(), 0);
-                etBusinessID.clearFocus();
+            } else if (etPasswordConfirm.isFocused()) {
+                mgr.hideSoftInputFromWindow(etPasswordConfirm.getWindowToken(), 0);
+                etPasswordConfirm.clearFocus();
             }
         }
 

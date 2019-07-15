@@ -40,6 +40,23 @@ public class Http extends HttpBaseService {
                 @Field(value = "CDO_12") String CDO_12,
                 @Field(value = "CDO_20") String CDO_20
         );
+
+
+        @FormUrlEncoded
+        @POST(BaseConst.URL_EMPINPUT)
+        Call<LoginModel> signUp(
+                @Path(value = "host", encoded = true) String host,
+                @Field(value = "GUBUN") String GUBUN,
+                @Field(value = "CDO_ID") String CDO_ID,
+                @Field(value = "CDO_02") String CDO_02,
+                @Field(value = "CDO_04") String CDO_04,
+                @Field(value = "CDO_12") String CDO_12,
+                @Field(value = "CDO_17") String CDO_17,
+                @Field(value = "CDO_18") String CDO_18,
+                @Field(value = "CDO_19") String CDO_19,
+                @Field(value = "CDO_20") String CDO_20,
+                @Field(value = "CDO_23") String CDO_23
+        );
     }
 
     //--------------------------------------------------

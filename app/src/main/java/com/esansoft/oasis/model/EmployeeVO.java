@@ -1,6 +1,6 @@
 package com.esansoft.oasis.model;
 
-public class EmployeeModel {
+public class EmployeeVO {
     public String CDO_ID;
     public String CDO_01;
     public String CDO_02;
