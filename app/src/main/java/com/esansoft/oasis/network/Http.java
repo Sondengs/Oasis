@@ -1,6 +1,6 @@
 package com.esansoft.oasis.network;
 
-import com.esansoft.oasis.model.SampleModel;
+import com.esansoft.oasis.model.LoginModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -33,7 +33,7 @@ public class Http extends HttpBaseService {
          */
         @FormUrlEncoded
         @POST(BaseConst.URL_EMPVIEW)
-        Call<SampleModel> login(
+        Call<LoginModel> login(
                 @Path(value = "host", encoded = true) String host,
                 @Field(value = "GUBUN") String GUBUN,
                 @Field(value = "CDO_ID") String CDO_ID,

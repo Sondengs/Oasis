@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.esansoft.base.base_fragment.BaseFragment;
+import com.esansoft.base.settings.SettingsKey;
 import com.esansoft.base_resource.broadcast_action.ClsBroadCast;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.ui.main.Main;
@@ -84,6 +85,15 @@ public class SettingFragment extends BaseFragment {
      * 로그아웃
      */
     private void logout() {
+        mSettings.Value.AutoLogin = false;
+        mSettings.putBooleanItem(SettingsKey.AutoLogin, mSettings.Value.AutoLogin);
+
+        mSettings.Value.LoginID = "";
+        mSettings.putStringItem(SettingsKey.LoginID, mSettings.Value.LoginID);
+
+        mSettings.Value.LoginPW = "";
+        mSettings.putStringItem(SettingsKey.LoginPW, mSettings.Value.LoginPW);
+
         openLoadingBar();
         new Handler().postDelayed(() -> {
             closeLoadingBar();

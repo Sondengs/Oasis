@@ -8,5 +8,10 @@
     <string name="action_settings">Settings</string>
 
     <!--회원가입-->
-    <string name="sign_up_00">회원가입</string>
+    <string name="sign_up_0">회원가입</string>
+
+    <!--로그인-->
+    <string name="login_0">이메일을 확인하세요.</string>
+    <string name="login_1">계정 혹은 비밀번호가 일치하지 않습니다. 입력한 내용을 다시 확인해 주세요.</string>
+
 </resources>

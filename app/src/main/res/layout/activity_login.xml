@@ -36,7 +36,7 @@
             android:inputType="text"
             android:maxLength="50"
             android:singleLine="true"
-            android:textColor="@color/colorDefaultButton"
+            android:textColor="@color/black"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/text_normal" />
 
@@ -49,9 +49,17 @@
             android:inputType="textPassword"
             android:maxLength="20"
             android:maxLines="1"
-            android:textColor="@color/colorDefaultButton"
+            android:textColor="@color/black"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/text_normal" />
+
+        <Switch
+            android:id="@+id/switchAutoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:switchPadding="16dp"
+            android:text="자동로그인" />
 
         <Button
             android:id="@+id/btnLogin"
