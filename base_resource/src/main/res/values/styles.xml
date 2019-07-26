@@ -22,7 +22,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- 테마 -->
+    <!-- 테마 -->ody
     <style name="TranslucentUser" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

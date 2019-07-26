@@ -5,17 +5,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-
 import com.esansoft.base.R;
 import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.base.settings.InterfaceSettings;
+import com.esansoft.base.user_interface.InterfaceUser;
 import com.esansoft.base.util.BaseLoadingBar;
+import com.esansoft.base.util.ClsUtil;
 
 public abstract class BaseActivity extends FragmentActivity {
     public static Context BaseContext;
     protected Context mContext;
     protected Activity mActivity;
     protected InterfaceSettings mSettings;
+    protected InterfaceUser mUser;
 
     private BaseLoadingBar mLoadingBar;
 
@@ -27,6 +29,17 @@ public abstract class BaseActivity extends FragmentActivity {
         mContext = this;
         mActivity = this;
         mSettings = InterfaceSettings.getInstance(this);
+        mUser = InterfaceUser.getInstance();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mUser == null || mUser.Value == null || mUser.Value.CDO_ID == null || mUser.Value.CDO_ID.isEmpty()) {
+            if (!getClass().getSimpleName().equals("Intro") && !getClass().getSimpleName().equals("Login") && !getClass().getSimpleName().equals("SignUp"))
+                ClsUtil.forceRestartAppforActivity(mActivity);
+        }
     }
 
     @Override

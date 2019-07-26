@@ -7,11 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.esansoft.base.settings.InterfaceSettings;
+import com.esansoft.base.user_interface.InterfaceUser;
 
 public class BaseFragment extends Fragment {
     protected Context mContext;
     protected Activity mActivity;
     protected InterfaceSettings mSettings;
+    protected InterfaceUser mUser;
 
     public BaseFragment() {
 
@@ -26,6 +28,8 @@ public class BaseFragment extends Fragment {
         mActivity = getActivity();
 
         mSettings = InterfaceSettings.getInstance(mContext);
+
+        mUser = InterfaceUser.getInstance();
     }
 
     @Override
@@ -36,6 +40,7 @@ public class BaseFragment extends Fragment {
             mContext = context;
             mActivity = (Activity) context;
             mSettings = InterfaceSettings.getInstance(mContext);
+            mUser = InterfaceUser.getInstance();
         }
     }
 

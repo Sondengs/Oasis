@@ -3,6 +3,7 @@ package com.esansoft.oasis.ui.permission_info;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.Button;
 
 import com.esansoft.base.base_activity.BaseActivity;
@@ -21,10 +22,11 @@ public class PermissionInfo extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.overridePendingTransition(R.anim.start_enter, R.anim.start_exit);
         setContentView(R.layout.activity_permission_info);
 
         initLayout();
+
+        initialize();
     }
 
     @Override
@@ -37,6 +39,7 @@ public class PermissionInfo extends BaseActivity {
     protected void initLayout() {
         btnConfirm = findViewById(R.id.btnConfirm);
         btnConfirm.setOnClickListener(v -> requestPermission());
+
     }
 
     @Override
@@ -62,7 +65,7 @@ public class PermissionInfo extends BaseActivity {
             ClsPermission.checkPermissionResult(mActivity, permissions, grantResults, new ClsPermission.OnPermissionListener() {
                 @Override
                 public void permissionGranted() {
-
+                    setResult(RESULT_OK);
                     finish();
                 }
 

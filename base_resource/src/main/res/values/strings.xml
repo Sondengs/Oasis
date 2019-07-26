@@ -14,4 +14,12 @@
     <string name="login_0">이메일을 확인하세요.</string>
     <string name="login_1">계정 혹은 비밀번호가 일치하지 않습니다. 입력한 내용을 다시 확인해 주세요.</string>
 
+    <!--출퇴근 체크-->
+    <string name="commute_0">최근</string>
+    <string name="commute_1">출퇴근 기록 없음</string>
+    <string name="commute_2">출근</string>
+    <string name="commute_3">퇴근</string>
+    <string name="commute_4">근무지 찾기</string>
+    <string name="commute_5">이미 출근 처리 되었습니다.</string>
+    <string name="commute_6">이미 퇴근 처리 되었습니다.</string>
 </resources>

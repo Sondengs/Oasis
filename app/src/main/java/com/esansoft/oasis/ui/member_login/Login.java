@@ -29,6 +29,7 @@ import com.esansoft.oasis.network.HttpBaseService;
 import com.esansoft.oasis.ui.main.Main;
 import com.esansoft.oasis.ui.member_sign_up.SignUp;
 import com.esansoft.oasis.ui.scanner.ScanBarcode;
+import com.esansoft.oasis.value_object.EmployeeVO;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -151,7 +152,7 @@ public class Login extends BaseActivity {
 
         // 인터넷 연결 여부 확인
         if (!ClsNetworkCheck.isConnectable(mContext)) {
-            BaseAlert.show("Check internet connection\nthen try again.");
+            BaseAlert.show(getString(R.string.common_network_error));
             return;
         }
 
@@ -210,11 +211,12 @@ public class Login extends BaseActivity {
                             // 로딩바 닫음
                             closeLoadingBar();
 
-                            // SampleModel 형태로 response를 받음
                             Response<LoginModel> response = (Response<LoginModel>) msg.obj;
 
                             if (response.body().Data.get(0).Validation) {
                                 // UserInterface 연결
+                                setSesstion(response.body().Data.get(0));
+
                                 goMain();
                             } else {
                                 // ErrorMsg
@@ -232,6 +234,19 @@ public class Login extends BaseActivity {
                 closeLoadingBar();
             }
         });
+    }
+
+    /**
+     * @param employeeVO
+     */
+    private void setSesstion(EmployeeVO employeeVO) {
+        mUser.Value.CDO_01 = employeeVO.CDO_01;
+        mUser.Value.CDO_02 = employeeVO.CDO_02;
+        mUser.Value.CDO_04 = employeeVO.CDO_04;
+        mUser.Value.CDO_12 = employeeVO.CDO_12;
+        mUser.Value.CDO_20 = employeeVO.CDO_20;
+        mUser.Value.CDO_23 = employeeVO.CDO_23;
+        mUser.Value.CDO_ID = employeeVO.CDO_ID;
     }
 
     /**

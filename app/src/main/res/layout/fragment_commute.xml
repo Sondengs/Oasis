@@ -19,10 +19,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="(주)푸른밤 445"
             android:textColor="@color/black"
             android:textSize="@dimen/text_big"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="(주)푸른밤 445"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +43,7 @@
                 android:paddingTop="3dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="3dp"
-                android:text="최근"
+                android:text="@string/commute_0"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_normal" />
 
@@ -50,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="출퇴근 기록 없음"
+                android:text="@string/commute_1"
                 android:textColor="#8EA2B8"
                 android:textSize="@dimen/text_normal" />
         </LinearLayout>
@@ -73,7 +75,7 @@
                 android:layout_height="100dp"
                 android:background="@drawable/shape_main_commute_check"
                 android:gravity="center"
-                android:text="출근"
+                android:text="@string/commute_2"
                 android:textColor="@drawable/shape_main_commute_check_text"
                 android:textSize="@dimen/text_biggest"
                 android:textStyle="bold" />
@@ -85,7 +87,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/shape_main_commute_check"
                 android:gravity="center"
-                android:text="퇴근"
+                android:text="@string/commute_3"
                 android:textColor="@drawable/shape_main_commute_check_text"
                 android:textSize="@dimen/text_biggest"
                 android:textStyle="bold" />
@@ -100,7 +102,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/shape_main_commute_button"
-        android:text="근무지 찾기"
+        android:text="@string/commute_4"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_normal" />
 </LinearLayout>

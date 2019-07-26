@@ -16,7 +16,7 @@ public class InterfaceSettings {
     private Context mContext;
 
     /**
-     * SharedPreferences의 데이터를 수정하고 싶을 때 사용
+     * SharedPreferences 데이터를 수정하고 싶을 때 사용
      */
     private static SharedPreferences.Editor editor;
 

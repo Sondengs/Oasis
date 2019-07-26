@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.base.network.ClsNetworkCheck;
@@ -17,7 +19,6 @@ import com.esansoft.base.util.BaseAlert;
 import com.esansoft.base.util.ClsDateTime;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.model.ATD_LIST_Model;
-import com.esansoft.oasis.model.LoginModel;
 import com.esansoft.oasis.network.BaseConst;
 import com.esansoft.oasis.network.Http;
 import com.esansoft.oasis.network.HttpBaseService;
@@ -69,29 +70,37 @@ public class WorkFragment extends BaseFragment {
 
     private void initLayout() {
         listView = view.findViewById(R.id.listView);
-
-        swipeRefresh = view.findViewById(R.id.swipeRefresh);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onRefresh() {
-                requestATDVIEW();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goWorkRecord();
+                Toast.makeText(mContext, "Pos:" + position, Toast.LENGTH_LONG).show();
             }
         });
+
+        // 아래로 당겨서 갱신
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(() -> requestATDVIEW());
+    }
+
+    /**
+     * 근무정보 상세 페이지로 이동
+     */
+    private void goWorkRecord() {
     }
 
 
     protected void initialize() {
         mList = new ArrayList<>();
 
-
         mAdapter = new WorkStateAdapter(mContext, mList);
         listView.setAdapter(mAdapter);
     }
 
-    private void requestATDVIEW() {
+    public void requestATDVIEW() {
         // 인터넷 연결 여부 확인
         if (!ClsNetworkCheck.isConnectable(mContext)) {
-            BaseAlert.show("Check internet connection\nthen try again.");
+            BaseAlert.show(getString(R.string.common_network_error));
             return;
         }
 
@@ -105,7 +114,7 @@ public class WorkFragment extends BaseFragment {
         Call<ATD_LIST_Model> call = Http.work(HttpBaseService.TYPE.POST).getWorkStateData(
                 BaseConst.URL_HOST,
                 "LIST",
-                "2",
+                mUser.Value.CDO_ID,
                 "20190611",
                 ""
         );
@@ -129,7 +138,6 @@ public class WorkFragment extends BaseFragment {
                             // 로딩바 닫음
                             closeLoadingBar();
 
-                            // SampleModel 형태로 response를 받음
                             Response<ATD_LIST_Model> response = (Response<ATD_LIST_Model>) msg.obj;
 
                             mList = response.body().Data;

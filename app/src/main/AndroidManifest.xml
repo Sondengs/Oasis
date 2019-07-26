@@ -23,7 +23,7 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".ui.work_record.WorkRecordActivity"></activity>
         <activity
             android:name=".ui.intro.Intro"
             android:screenOrientation="portrait"
@@ -33,7 +33,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -46,12 +45,10 @@
                     android:scheme="esansoftrefac" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.settings_profile.ProfileMain"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentUser" />
-
         <activity
             android:name=".ui.permission_info.PermissionInfo"
             android:screenOrientation="portrait"
@@ -76,12 +73,9 @@
             android:name=".ui.member_sign_up.SignUp"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentUser" />
-        <activity android:name=".ui.scanner.ScanBarcode" />
-
-
-        <!--==================================-->
-        <!--Service-->
-        <!--==================================-->
+        <activity android:name=".ui.scanner.ScanBarcode" /> <!-- ================================== -->
+        <!-- Service -->
+        <!-- ================================== -->
         <service
             android:name=".base.fcm.MyFirebaseMessagingService"
             android:exported="false">
@@ -95,10 +89,9 @@
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
-        </service>
-        <!--==================================-->
-        <!--Provider-->
-        <!--==================================-->
+        </service> <!-- ================================== -->
+        <!-- Provider -->
+        <!-- ================================== -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -107,11 +100,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!--==================================-->
-        <!--meta-->
-        <!--==================================-->
+        </provider> <!-- ================================== -->
+        <!-- meta -->
+        <!-- ================================== -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="dskuhyhdo7" />

@@ -22,4 +22,9 @@ public class BaseConst {
      * 근무 조회
      */
     public static final String URL_ATDVIEW = "{host}/Mobile/ATDVIEW";
+
+    /**
+     * 출퇴근 입력
+     */
+    public static final String URL_ATDINPUT = "{host}/Mobile/ATDINPUT";
 }

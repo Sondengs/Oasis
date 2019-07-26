@@ -219,7 +219,7 @@ public class SignUp extends BaseActivity {
     private void requestSignUp() {
         // 인터넷 연결 여부 확인
         if (!ClsNetworkCheck.isConnectable(mContext)) {
-            BaseAlert.show("Check internet connection\nthen try again.");
+            BaseAlert.show(getString(R.string.common_network_error));
             return;
         }
 
@@ -263,7 +263,6 @@ public class SignUp extends BaseActivity {
                             // 로딩바 닫음
                             closeLoadingBar();
 
-                            // SampleModel 형태로 response를 받음
                             Response<LoginModel> response = (Response<LoginModel>) msg.obj;
 
                             if (response.body().Data.get(0).Validation) {

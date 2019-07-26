@@ -1,5 +1,6 @@
 package com.esansoft.oasis.network;
 
+import com.esansoft.oasis.model.ATD_INPUT_Model;
 import com.esansoft.oasis.model.ATD_LIST_Model;
 import com.esansoft.oasis.model.LoginModel;
 
@@ -44,17 +45,18 @@ public class Http extends HttpBaseService {
 
         /**
          * 가입
+         *
          * @param host
          * @param GUBUN
          * @param CDO_ID
          * @param CDO_02
-         * @param CDO_04
-         * @param CDO_12
+         * @param CDO_04 성명
+         * @param CDO_12 비밀번호
          * @param CDO_17
          * @param CDO_18
          * @param CDO_19
-         * @param CDO_20
-         * @param CDO_23
+         * @param CDO_20 이메일
+         * @param CDO_23 휴대폰 번호
          * @return
          */
         @FormUrlEncoded
@@ -82,15 +84,48 @@ public class Http extends HttpBaseService {
     }
 
     public interface IATD {
-
+        /**
+         *
+         * @param host
+         * @param GUBUN LIST
+         * @param LED_ID
+         * @param LED_03 날짜
+         * @param LED_04
+         * @return
+         */
         @FormUrlEncoded
         @POST(BaseConst.URL_ATDVIEW)
         Call<ATD_LIST_Model> getWorkStateData(
                 @Path(value = "host", encoded = true) String host,
                 @Field(value = "GUBUN") String GUBUN,
-                @Field(value = "LED_ID") String CDO_ID,
-                @Field(value = "LED_03") String CDO_12,
-                @Field(value = "LED_04") String CDO_20
+                @Field(value = "LED_ID") String LED_ID,
+                @Field(value = "LED_03") String LED_03,
+                @Field(value = "LED_04") String LED_04
+        );
+
+        /**
+         *
+         * @param host
+         * @param GUBUN WORK 출근 END 퇴근
+         * @param LED_ID
+         * @param LED_02
+         * @param LED_03 근무일 yyyyMMdd
+         * @param LED_04 사원코드
+         * @param LED_07 출근시간 HHmm
+         * @param LED_08 퇴근시간 HHmm
+         * @return
+         */
+        @FormUrlEncoded
+        @POST(BaseConst.URL_ATDINPUT)
+        Call<ATD_INPUT_Model> setCommute(
+                @Path(value = "host", encoded = true) String host,
+                @Field(value = "GUBUN") String GUBUN,
+                @Field(value = "LED_ID") String LED_ID, // ID
+                @Field(value = "LED_02") String LED_02,
+                @Field(value = "LED_03") String LED_03, // 근무일 yyyyMMdd
+                @Field(value = "LED_04") String LED_04, // 사원코드
+                @Field(value = "LED_07") String LED_07, // 출근시간 HHmm
+                @Field(value = "LED_08") String LED_08  // 퇴근시간 HHmm
         );
     }
 }

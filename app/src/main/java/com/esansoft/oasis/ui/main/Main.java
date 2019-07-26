@@ -38,10 +38,16 @@ public class Main extends BaseActivity {
     private BaseViewPager viewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private List<Fragment> mListFragment = new ArrayList<>();
+
+
+
     private CommuteFragment fragmentHome;
     private WorkFragment fragmentWork;
     private NotiFragment fragmentNoti;
     private SettingFragment fragmentSetting;
+
+
+
 
     private BaseHeader header;
 
@@ -160,6 +166,9 @@ public class Main extends BaseActivity {
                 tvMainWork.setSelected(true);
                 header.tvHeaderTitle.setText("근무기록");
                 header.btnHeaderRight1.setVisibility(View.GONE);
+
+                if(fragmentWork != null)
+                    fragmentWork.requestATDVIEW();
                 break;
             case TAB_PAGE_NOTI:
                 tvMainNoti.setSelected(true);
