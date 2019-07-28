@@ -20,14 +20,13 @@ import com.esansoft.base_resource.broadcast_action.ClsBroadCast;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.ui.member_login.Login;
 import com.esansoft.oasis.ui.scanner.ScanBarcode;
+import com.esansoft.oasis.ui.settings_main.SettingFragment;
 import com.esansoft.oasis.ui.work_place_search.FindWorkPlace;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.esansoft.oasis.ui.settings_main.SettingFragment;
 
 public class Main extends BaseActivity {
     private final int TAB_PAGE_HOME = 0;
@@ -40,13 +39,10 @@ public class Main extends BaseActivity {
     private List<Fragment> mListFragment = new ArrayList<>();
 
 
-
     private CommuteFragment fragmentHome;
     private WorkFragment fragmentWork;
     private NotiFragment fragmentNoti;
     private SettingFragment fragmentSetting;
-
-
 
 
     private BaseHeader header;
@@ -91,6 +87,8 @@ public class Main extends BaseActivity {
         tvMainSetting.setOnClickListener(v -> setCurrentViewPager(TAB_PAGE_SETTING));
 
         initViewPager();
+
+        viewPager.setCurrentItem(1, false);
     }
 
     @Override
@@ -167,7 +165,7 @@ public class Main extends BaseActivity {
                 header.tvHeaderTitle.setText("근무기록");
                 header.btnHeaderRight1.setVisibility(View.GONE);
 
-                if(fragmentWork != null)
+                if (fragmentWork != null && fragmentWork.getContext() != null)
                     fragmentWork.requestATDVIEW();
                 break;
             case TAB_PAGE_NOTI:

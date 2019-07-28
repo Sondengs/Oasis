@@ -1,6 +1,7 @@
 package com.esansoft.oasis.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,9 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.base.network.ClsNetworkCheck;
@@ -22,6 +21,7 @@ import com.esansoft.oasis.model.ATD_LIST_Model;
 import com.esansoft.oasis.network.BaseConst;
 import com.esansoft.oasis.network.Http;
 import com.esansoft.oasis.network.HttpBaseService;
+import com.esansoft.oasis.ui.work_record.WorkRecordActivity;
 import com.esansoft.oasis.ui.work_state.WorkStateAdapter;
 import com.esansoft.oasis.value_object.WorkStateVO;
 
@@ -70,13 +70,7 @@ public class WorkFragment extends BaseFragment {
 
     private void initLayout() {
         listView = view.findViewById(R.id.listView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goWorkRecord();
-                Toast.makeText(mContext, "Pos:" + position, Toast.LENGTH_LONG).show();
-            }
-        });
+        listView.setOnItemClickListener((parent, view, position, id) -> goWorkRecord(position));
 
         // 아래로 당겨서 갱신
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
@@ -86,7 +80,10 @@ public class WorkFragment extends BaseFragment {
     /**
      * 근무정보 상세 페이지로 이동
      */
-    private void goWorkRecord() {
+    private void goWorkRecord(int position) {
+        Intent intent = new Intent(mContext, WorkRecordActivity.class);
+        intent.putExtra(WorkRecordActivity.WORK_STATE, mList.get(position));
+        mContext.startActivity(intent);
     }
 
 
@@ -97,6 +94,9 @@ public class WorkFragment extends BaseFragment {
         listView.setAdapter(mAdapter);
     }
 
+    /**
+     * 근무 상태 API 호출
+     */
     public void requestATDVIEW() {
         // 인터넷 연결 여부 확인
         if (!ClsNetworkCheck.isConnectable(mContext)) {

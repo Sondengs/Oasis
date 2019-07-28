@@ -22,4 +22,7 @@
     <string name="commute_4">근무지 찾기</string>
     <string name="commute_5">이미 출근 처리 되었습니다.</string>
     <string name="commute_6">이미 퇴근 처리 되었습니다.</string>
+    <string name="commute_7">근무 일지</string>
+    <string name="commute_8">근무 내용이 없습니다.</string>
+    <string name="commute_9">근무 시간</string>
 </resources>
