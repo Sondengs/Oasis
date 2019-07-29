@@ -153,4 +153,40 @@ public class InterfaceSettings {
         return preferences.getFloat(key, defaultValue);
     }
 
+    public void putIntItem(String key, int value) {
+        //editor가 Null인 경우가 발생하므로 null인경우는 return한다.
+        //다른 Activity로 들어가면 InterfaceSettings가 재할당될 것임.
+        if (editor == null)
+            return;
+
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+
+    public int getIntItem(String key, int defaultValue) {
+
+        //preferences가 Null인 경우가 발생하므로 null인경우는 defaultValue를 return한다.
+        //다른 Activity로 들어가면 InterfaceSettings가 재할당될 것임.
+        if (preferences == null)
+            return defaultValue;
+
+        return preferences.getInt(key, defaultValue);
+    }
+
+    public void putLongItem(String key, long value) {
+        if (editor == null)
+            return;
+
+        editor.putLong(key, value);
+        editor.commit();
+    }
+
+
+    public long getIntItem(String key, long defaultValue) {
+        if (preferences == null)
+            return defaultValue;
+
+        return preferences.getLong(key, defaultValue);
+    }
 }

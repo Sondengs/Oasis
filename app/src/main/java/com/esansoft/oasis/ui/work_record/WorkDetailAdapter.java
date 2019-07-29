@@ -10,24 +10,28 @@ import android.widget.TextView;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.value_object.WorkStateVO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class WorkDetailAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private ArrayList<WorkStateVO> mList;
     private LayoutInflater mInflater;
-
+    private SimpleDateFormat sdfParse = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdfFormat;
 
     public WorkDetailAdapter(Context context, ArrayList<WorkStateVO> list) {
         this.mContext = context;
         this.mList = list;
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.sdfFormat = new SimpleDateFormat(mContext.getString(R.string.commute_10));
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View convertView = mInflater.inflate(R.layout.listitem_work_record_detail, parent, false);
+
         RecyclerView.ViewHolder holder = new ViewHolder(convertView);
 
         return holder;
@@ -42,10 +46,34 @@ public class WorkDetailAdapter extends RecyclerView.Adapter {
 
         final ViewHolder finalHolder = (ViewHolder) holder;
 
-        finalHolder.tvDate.setText(mList.get(position).LED_03);
-        finalHolder.tvStart.setText(mList.get(position).LED_07);
-        finalHolder.tvEnd.setText(mList.get(position).LED_08);
-        finalHolder.tvWorkTime.setText(mList.get(position).WORKTIME);
+        String strDate = mList.get(position).LED_03;
+        try {
+            strDate = sdfFormat.format(sdfParse.parse(strDate));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finalHolder.tvDate.setText(strDate);
+
+        StringBuilder sb;
+
+        try {
+            sb = new StringBuilder(mList.get(position).LED_07);
+            finalHolder.tvStart.setText(sb.insert(2, ":"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            sb = new StringBuilder(mList.get(position).LED_08);
+            finalHolder.tvEnd.setText(sb.insert(2, ":"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            sb = new StringBuilder(mList.get(position).WORKTIME);
+            finalHolder.tvWorkTime.setText(sb.insert(2, ":"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

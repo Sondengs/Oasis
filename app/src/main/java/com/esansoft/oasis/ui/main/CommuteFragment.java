@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.esansoft.base.base_fragment.BaseFragment;
 import com.esansoft.base.network.ClsNetworkCheck;
+import com.esansoft.base.settings.SettingsKey;
 import com.esansoft.base.util.BaseAlert;
 import com.esansoft.base.util.ClsDateTime;
-import com.esansoft.base.util.ClsUtil;
 import com.esansoft.oasis.R;
 import com.esansoft.oasis.model.ATD_INPUT_Model;
 import com.esansoft.oasis.network.BaseConst;
@@ -110,6 +110,14 @@ public class CommuteFragment extends BaseFragment {
         //v.setSelected(!v.isSelected());
     }
 
+    public void setWorkStart() {
+        requestATDVIEW("WORK", tvGoToWork);
+    }
+
+    public void setWorkEnd() {
+        requestATDVIEW("End", tvLeaveWork);
+    }
+
     //================================
     // API 호출
     //================================
@@ -117,7 +125,7 @@ public class CommuteFragment extends BaseFragment {
     /**
      * 출퇴근 입력
      */
-    private void requestATDVIEW(String type, View v) {
+    private void requestATDVIEW(final String type, View v) {
         String strWorTime = "";
         String strEndTime = "";
 
@@ -169,6 +177,14 @@ public class CommuteFragment extends BaseFragment {
 
                             // API Validation 추가 후에 체크 코드 삽입하세요.
                             v.setSelected(true);
+                            if (type.equals("WORK")) {
+                                mSettings.Value.WorkStart = ClsDateTime.getNow("yyyy-MM-dd");
+                                mSettings.putStringItem(SettingsKey.WorkStart, mSettings.Value.WorkStart);
+                            } else {
+                                mSettings.Value.WorkEnd = ClsDateTime.getNow("yyyy-MM-dd");
+                                mSettings.putStringItem(SettingsKey.WorkEnd, mSettings.Value.WorkEnd);
+                            }
+
 //                            if (response.body().Data.get(0).Validation) {
 //
 //                            } else {
